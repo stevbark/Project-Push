@@ -1,0 +1,120 @@
+Initialize engine version: 4.2.2f1 (54f0fc09defb)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [atiumdag.dll 7.14.10.603]
+    Renderer: ATI Mobility Radeon HD 3870
+    Vendor:   ATI
+    VRAM:     1400 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 DF24=1 INTZ=0 RAWZ=0 NULL=0 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Stephen\Desktop\Push\new Push repository\Push 1.1 build_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Stephen\Desktop\Push\new Push repository\Push 1.1 build_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Stephen\Desktop\Push\new Push repository\Push 1.1 build_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Stephen\Desktop\Push\new Push repository\Push 1.1 build_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Stephen\Desktop\Push\new Push repository\Push 1.1 build_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading C:\Users\Stephen\Desktop\Push\new Push repository\Push 1.1 build_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+- Completed reload, in  0.557 seconds
+desktop: 1920x1200 60Hz; virtual: 1920x1200 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+start
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+generateMap
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+George is NOT in the fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Bob is NOT in the fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+George is NOT in the fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Bob is NOT in the fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Bob is NOT in the fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+The referenced script on this Behaviour is missing!
+ 
+(Filename:  Line: 1657)
+
+Bob can see
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Medic Kyle can see
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Bob is in fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Medic Lars is in fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+George is NOT in the fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Bob is NOT in the fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Medic Kyle is NOT in the fog of war
+ 
+(Filename: C:/BuildAgent/work/ea95e74f6e5f192d/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Platform assembly: C:\Users\Stephen\Desktop\Push\new Push repository\Push 1.1 build_Data\Managed\Boo.Lang.dll (this message is harmless)
