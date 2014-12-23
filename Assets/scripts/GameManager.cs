@@ -1,8 +1,18 @@
+/*
+ * Based on Paul Metcalf's Unity3d tutorial.
+ * 
+ * Heavily modified for Project Push by Stephen Barkley-Yeung
+ */
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour {
+/*
+ * The central game object. Contains the game state. One per game.
+ */
+public class GameManager : MonoBehaviour
+{
+    // one and only game Manager. 
 	public static GameManager instance;
 	public static FogOfWar MapFog = new FogOfWar();
 	
@@ -21,19 +31,20 @@ public class GameManager : MonoBehaviour {
 	public int currentTeamIndex=0;
 	public Team currentTeam =  null;
 	public int maxTeams=2;
-	public unitCreation create;   // removed from final game, put in different objects that need it.
-	public testBuilding testbarracks = new testBuilding(); // removed after buildings are complete 
-	void Awake() {
+	public unitCreation create;   // TODO: remove from final game, put in different objects that need it.
+	public testBuilding testbarracks = new testBuilding(); // TODO: remove after buildings are complete 
+	void Awake()
+    {
 		instance = this;
 	}
 	
 
 	// Use this for initialization
-	void Start () {	
+	void Start ()
+    {	
 		
 		Debug.Log("start");
 		generateMap();
-	//	GameManager.instance.highlightTilesAt(new Vector2(5,5) ,Color.green, 10 );
 		generatePlayers();
 		GameManager.instance.fogOfWar();
 		create = new unitCreation(); 
@@ -41,30 +52,23 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-		if (players[currentPlayerIndex].HP > 0) players[currentPlayerIndex].TurnUpdate();
-//		player p = teamList[currentTeamIndex].getCurrentPlayer();
-//		if(p.actionPoints<=0)
-		//{
-		/*	foreach (Player player in teamList[currentTeamIndex].getMembers())
-			{
-				if(player.actionPoints>0)
-				{
-					
-				}
-			}*/
-		//}
-		else nextTurn();
+	void Update ()
+    {
+
+        if (players[currentPlayerIndex].HP > 0)
+        {
+            players[currentPlayerIndex].TurnUpdate();
+        }
+        else nextTurn();
 		if(players[currentPlayerIndex].actionPoints<=0)
 		{
 			players[currentPlayerIndex].renderer.material.color = Color.black;
 			currentPlayerIndex = 0;
-	//		currentPlayerIndex=;
 		}
 		
 	}
 	
+    // Called when a player dies
 	public void removePlayer(Player p)
 	{
 		if(players.Contains (p))
@@ -82,24 +86,29 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	
-	void OnGUI () {
-	//	if (players[currentPlayerIndex].HP > 0) players[currentPlayerIndex].TurnOnGUI();
+	// tuns on the GUI for the first player on a team
+    void OnGUI () 
+    {
 		players[currentPlayerIndex].TurnOnGUI();
 		teamList[currentTeamIndex].TurnOnGUI();
 	}
 	
+
 	public void selectNewPlayer(Tile t)
 	{
 		
 		foreach(Player p in teamList[currentTeamIndex].getMembers())
 		{
+            // checks if the player is on the team 
 			if(p.gridPosition.x==t.gridPosition.x&&p.gridPosition.y==t.gridPosition.y)
-				if(p.actionPoints>0)
+                // checks if the player still has actions left. If the player is out of actions, they cannot be selected.
+                if(p.actionPoints>0)
 				{
 					currentPlayerIndex = players.IndexOf(p);
 					Debug.Log("selected "+p.playerName+ "has "+p.actionPoints+" action points and " + p.HP + " HP"); 
 				}
 		}
+        // incomplete
 		if(t.gridPosition.x== testbarracks.gridPosition.x &&t.gridPosition.y == testbarracks.gridPosition.y)
 		{
 			Debug.Log("barracks selected");
@@ -108,93 +117,74 @@ public class GameManager : MonoBehaviour {
 	}
 	
 		
-
-
-	//	public Vector2 getPlayer (Tile tile)
-//	{
-//		foreach (Player p in players)
-//			if(p.gridPosition.x.Equals(tile.gridPosition.x) && p.gridPosition.y.Equals(tile.gridPosition.y)&&p.team == currentTeam)
-//		{
-//				return p.gridPosition;
-//		}
-//		return new Vector2(-1,-1);
-//	}
 	
-	
-	public void nextTurn() {
+	// updates the team counter and sets the fog of war for that team.
+	public void nextTurn()
+    {
 		Debug.Log("Team" + currentTeamIndex);
-	//	fogOutMap();
 		if(currentTeamIndex + 1 < teamList.Count)
 		{
 			currentTeamIndex++;
 		}
-		else{
+		else
+        {
 			currentTeamIndex = 0;
 		}
 		
 		currentTeam = teamList[currentTeamIndex];
 		currentTeam.nextTurn();
-	//	Player p = currentTeam.getMembers()[0];
 		currentPlayerIndex=0;
 		MapFog.fogOfWar(map,currentTeam,players);
-		//fogOfWar();
-	//	GameManager.instance.highlightTilesAt(new Vector2(5,5) ,Color.green, 10 );
-	/*	if (currentTeam+ 1 < maxTeams) 
-		{
-			currentTeam++;
-		}
-		else
-		{
-			currentTeam=0;
-		}
-	*/
-	//	for(int i=0; i < players.Count; i++)
-	//	{
-	//		if(players[i].team == currentTeam)
-	//		{
-	//			currentTeamPlayer.Add(players[i]);
-	//		}
-	//	}
-		
-	//players
-	//	if (currentPlayerIndex + 1 < players.Count) {
-	//		currentPlayerIndex++;
-	//	} else {
-	//		currentPlayerIndex = 0;
-	//	}
-		
+
+	
 	}
 	
-	public void highlightTilesAt(Vector2 originLocation, Color highlightColor, int distance) {
+    // highlights every square within a number of squares from the center. Used for attacks and skills. 
+	public void highlightTilesAt(Vector2 originLocation, Color highlightColor, int distance)
+    {
 		List <Tile> highlightedTiles = TileHighlight.FindHighlight(map[(int)originLocation.x][(int)originLocation.y], distance);
 		
-		foreach (Tile t in highlightedTiles) {
+		foreach (Tile t in highlightedTiles) 
+        {
 			t.transform.renderer.material.color = highlightColor;
 		}
 	}
 	
-	public void removeTileHighlights() {
-		for (int i = 0; i < mapSize; i++) {
-			for (int j = 0; j < mapSize; j++) {
+    // resets the entire map to white. 
+	public void removeTileHighlights()
+    {
+		for (int i = 0; i < mapSize; i++)
+        {
+			for (int j = 0; j < mapSize; j++) 
+            {
 				map[i][j].transform.renderer.material.color = Color.white;
 			}
 		}
 	}
  	
-	public void moveCurrentPlayer(Tile destTile) {
+
+	public void moveCurrentPlayer(Tile destTile) 
+    {
+        // can only move to a location that is highlighted. 
 		if (destTile.transform.renderer.material.color != Color.white&&destTile.transform.renderer.material.color != FogOfWar.colorOfFogOfWar)
-		
-			if(!isSomebodyThere(destTile)){
-				removeTileHighlights();
-				players[currentPlayerIndex].moving = false;
-				players[currentPlayerIndex].gridPosition = destTile.gridPosition;
-				players[currentPlayerIndex].moveDestination = destTile.transform.position + 1.5f * Vector3.up;
-				MapFog.fogOfWar(map,currentTeam,players);
-		} else {
+        { 
+		    // units cannot overlap with other units or move off the map. After moving, need to remove the highlights and update the fog of war
+            if (!isSomebodyThere(destTile))
+            {
+                removeTileHighlights();
+                players[currentPlayerIndex].moving = false;
+                players[currentPlayerIndex].gridPosition = destTile.gridPosition;
+                players[currentPlayerIndex].moveDestination = destTile.transform.position + 1.5f * Vector3.up;
+                MapFog.fogOfWar(map, currentTeam, players);
+            }
+		} 
+        else 
+        {
 			Debug.Log ("destination invalid");
 		}
 	}
 	
+    // checks if the tile is occupied by a player
 	private bool isSomebodyThere(Tile destTile)
 	{
 		foreach(Player P in players)
@@ -208,14 +198,18 @@ public class GameManager : MonoBehaviour {
 		return false;
 	}
 	
-	public void attackWithCurrentPlayer(Tile destTile) {
-		if (destTile.transform.renderer.material.color != Color.white||destTile.transform.renderer.material.color != FogOfWar.colorOfFogOfWar ) {
+	public void attackWithCurrentPlayer(Tile destTile)
+    {
+        // Checks to see if the tiles are not white or covered with fog since the ability needs to be in range and visible. 
+		if (destTile.transform.renderer.material.color != Color.white||destTile.transform.renderer.material.color != FogOfWar.colorOfFogOfWar )
+        {
 			
 			Player target = null;
-			foreach (Player p in players) {
+			foreach (Player p in players)
+            {
 				if (p.gridPosition == destTile.gridPosition) 
 				{
-				//	currentTeam.playerList
+                    // cannot attack teammates
 					 if(currentTeam.doesContainMember(p))
 					{
 						Debug.Log ("He is on your team");
@@ -224,49 +218,46 @@ public class GameManager : MonoBehaviour {
 					else {target = p;}
 				}
 			}
-			
-			if (target != null) {
+			// if target exists
+			if (target != null)
+            {
 								
 				//Debug.Log ("p.x: " + players[currentPlayerIndex].gridPosition.x + ", p.y: " + players[currentPlayerIndex].gridPosition.y + " t.x: " + target.gridPosition.x + ", t.y: " + target.gridPosition.y);
 				if (players[currentPlayerIndex].gridPosition.x >= target.gridPosition.x - 1 && players[currentPlayerIndex].gridPosition.x <= target.gridPosition.x + 1 &&
-					players[currentPlayerIndex].gridPosition.y >= target.gridPosition.y - 1 && players[currentPlayerIndex].gridPosition.y <= target.gridPosition.y + 1) {
+					players[currentPlayerIndex].gridPosition.y >= target.gridPosition.y - 1 && players[currentPlayerIndex].gridPosition.y <= target.gridPosition.y + 1)
+                {
 					players[currentPlayerIndex].actionPoints--;
 					
 					removeTileHighlights();
 					players[currentPlayerIndex].moving = false;			
 					players[currentPlayerIndex].attacking = false;
-					//attack logic
-					//roll to hit
-			//		bool hit = Random.Range(0.0f, 1.0f) <= players[currentPlayerIndex].attackChance;
-					
-			//		if (hit) {
-						//damage logic
-						int amountOfDamage = 5;
+
+                    // attacks will always hit and currently deal set amount of damage.
+					int amountOfDamage = 5;
 						
-						target.HP -= amountOfDamage;
+					target.HP -= amountOfDamage;
 						
-						Debug.Log(players[currentPlayerIndex].playerName + " successfuly hit " + target.playerName + " for " + amountOfDamage + " damage!");
-				//	} else {
-				//		Debug.Log(players[currentPlayerIndex].playerName + " missed " + target.playerName + "!");
-					}
-				//}
-				
-				else {
+					Debug.Log(players[currentPlayerIndex].playerName + " successfuly hit " + target.playerName + " for " + amountOfDamage + " damage!");
+				}
+				else
+                {
 					Debug.Log ("Target is not adjacent!");
 				}
 			}
-		} else {
+		} 
+        else 
+        {
 			Debug.Log ("destination invalid");
 		}
 		MapFog.fogOfWar(map,currentTeam,players);
-		//fogOfWar();
 	}
 	
 	// Does the ability of the selected player
 	public void doTargetAreaAbility(Tile destTile)
 	{
 		// Check to see if we are looking at an ability tile
-		if (destTile.transform.renderer.material.color != Color.white||destTile.transform.renderer.material.color != FogOfWar.colorOfFogOfWar ){	
+		if (destTile.transform.renderer.material.color != Color.white||destTile.transform.renderer.material.color != FogOfWar.colorOfFogOfWar )
+        {	
 			// Choose a target
 			Player target = null;
 			foreach(Player p in players)
@@ -274,7 +265,7 @@ public class GameManager : MonoBehaviour {
 				if (p.gridPosition == destTile.gridPosition) 
 				{
 				//	currentTeam.playerList
-					 if(currentTeam.doesContainMember(p))
+					if(currentTeam.doesContainMember(p))
 					{
 						target = p;
 					}
@@ -299,7 +290,8 @@ public class GameManager : MonoBehaviour {
 							target.HP = target.maxHP;
 						}
 					}
-					else{
+					else
+                    {
 						Debug.Log ("This unit is at full health");
 						players[currentPlayerIndex].abilityActive = false;
 					}
@@ -313,12 +305,16 @@ public class GameManager : MonoBehaviour {
 		MapFog.fogOfWar (map, currentTeam, players);
 	}
 	
-	void generateMap() {
+    // Creates the map. Currently an 11 by 11 sqare map. 
+	void generateMap()
+    {
 		Debug.Log("generateMap");
 		map = new List<List<Tile>>();
-		for (int i = 0; i < mapSize; i++) {
+		for (int i = 0; i < mapSize; i++)
+        {
 			List <Tile> row = new List<Tile>();
-			for (int j = 0; j < mapSize; j++) {
+			for (int j = 0; j < mapSize; j++) 
+            {
 				Tile tile = ((GameObject)Instantiate(TilePrefab, new Vector3(i - Mathf.Floor(mapSize/2),0, -j + Mathf.Floor(mapSize/2)), Quaternion.Euler(new Vector3()))).GetComponent<Tile>();
 				tile.gridPosition = new Vector2(i, j);
 				row.Add (tile);
@@ -328,7 +324,9 @@ public class GameManager : MonoBehaviour {
 		
 	}
 	
-	void generatePlayers() {
+    // creates the units that start on the board
+	void generatePlayers() 
+    {
 		teamList.Add(new Team());
 		teamList.Add(new Team());
 		UserPlayer player;
@@ -394,10 +392,14 @@ public class GameManager : MonoBehaviour {
 		
 		//players.Add(aiplayer);
 	}
-		public void highlightCurrentSquare(Player P)
+
+    // colors the selected unit's square white
+	public void highlightCurrentSquare(Player P)
 	{
-		for (int i = 0; i < mapSize; i++) {
-			for (int j = 0; j < mapSize; j++) {
+		for (int i = 0; i < mapSize; i++)
+        {
+			for (int j = 0; j < mapSize; j++)
+            {
 				if(i==P.gridPosition.x&&j==P.gridPosition.y)
 				{
 						map[i][j].transform.renderer.material.color = Color.white;
@@ -410,87 +412,15 @@ public class GameManager : MonoBehaviour {
 		MapFog.fogOfWar(map,currentTeam,players);
 	}
 	
-/*	public void fogOfWar()
-	{
-		fogOutMap();
-		currentTeam.teamSight();
-		HidingUnseenUnits();
-		RevealingSeenUnits();
-	}
 	
-	void fogOutMap()
-	{
-		for(int i=0; i<map.Count;i++)
-		{
-			List<Tile> mapRow= map[i];
-			for(int j=0; j<mapRow.Count;j++)
-			{
-				mapRow[j].transform.renderer.material.color = colorOfFogOfWar;
-			}
-		}
-	}
-	
-	public void highlightCurrentSquare(Player P)
-	{
-		for (int i = 0; i < mapSize; i++) {
-			for (int j = 0; j < mapSize; j++) {
-				if(i==P.gridPosition.x&&j==P.gridPosition.y)
-				{
-						map[i][j].transform.renderer.material.color = Color.white;
-				}
-			}
-		}
-	}
-	
-	private void HidingUnseenUnits()
-	{
-		foreach (Player P in players)
-		{
-			if(map [(int)P.gridPosition.x][(int)P.gridPosition.y].transform.renderer.material.color==colorOfFogOfWar) 
-			{
-				if(P != null)
-				{
-					P.renderer.enabled = false;
-				}
-				
-			//	P.invisible();
-			//	P.renderer.enabled = false;
-				//P(UserPlayer);
-				//UserPlayer temp = (UserPlayer)P;
-				//P.GetComponent(MeshRenderer).enabled = false;
-			//	P.GetComponent(MeshRenderer).renderer.enabled = false;
-				
-				Debug.Log (P.playerName + " is in fog of war");
-			}
-		}
-	}
-	
-	private void RevealingSeenUnits()
-	{
-		foreach (Player P in players)
-		{
-			if(map [(int)P.gridPosition.x][(int)P.gridPosition.y].transform.renderer.material.color==Color.white) 
-			{
-				if(P != null)
-				{
-					P.renderer.enabled = true;
-				}
-				
-				Debug.Log (P.playerName + " is NOT in the fog of war");
-			}
-		}
-	}
-	
-	
-	*/
-	
-	
+	// creates a new player object. will be replaced with create New Unit once the game is complete. 
 	public Player createUserPlayer(int xCordinate, int yCordinate,int teamNumber) //this will probably be removed once the game is done.
 	{
 		return createNewUnit(UserPlayerPrefab,xCordinate, yCordinate, teamNumber);
 	}
 	
-	//public Player createNewUnit(GameObject UnitPrefab, Vector3 startPosition, Vector2 gridPosition, int teamNumber)
+
+    // Creates a new unit. Still incomplete
 	public Player createNewUnit(GameObject UnitPrefab, int x, int y, int teamNumber) 
 	{
 
@@ -505,7 +435,5 @@ public class GameManager : MonoBehaviour {
 		return player;
 
 	}
-	
-	
 	
 }

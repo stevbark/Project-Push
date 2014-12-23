@@ -6,6 +6,7 @@ public class FogOfWar : MonoBehaviour
 {
 	public static readonly Color colorOfFogOfWar= Color.grey;
 	// Use this for initialization
+    // this will be called by game manager when the game in intialized and it is the same as other times the game is being fogged out. As a result this does not need to do anything
 	void Start ()
 	{
 	
@@ -27,7 +28,7 @@ public class FogOfWar : MonoBehaviour
 		RevealingSeenUnits(map,players);
 	}
 	
-	
+	// set all squares to the fog of war color
 	private void fogOutMap(List <List<Tile>> map)
 	{
 		for(int i=0; i<map.Count;i++)
@@ -40,7 +41,7 @@ public class FogOfWar : MonoBehaviour
 		}
 	}
 	
-	
+	// hides any characters who's squares are colored the fog of war color because those characters cannot be seen.
 	private void HidingUnseenUnits(List <List<Tile>> map,List <Player> players)
 	{
 		foreach (Player P in players)
@@ -51,19 +52,14 @@ public class FogOfWar : MonoBehaviour
 				{
 					P.renderer.enabled = false;
 				}
-				
-			//	P.invisible();
-			//	P.renderer.enabled = false;
-				//P(UserPlayer);
-				//UserPlayer temp = (UserPlayer)P;
-				//P.GetComponent(MeshRenderer).enabled = false;
-			//	P.GetComponent(MeshRenderer).renderer.enabled = false;
+		
 				
 				Debug.Log (P.playerName + " is in fog of war");
 			}
 		}
 	}
 	
+    // this wil reveal units that can be seen
 	public void RevealingSeenUnits(List <List<Tile>> map,List <Player> players)
 	{
 		foreach (Player P in players)

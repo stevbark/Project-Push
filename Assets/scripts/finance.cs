@@ -28,8 +28,9 @@ public class finance : MonoBehaviour
 	{
 		money+=amountAdded;
 	}
-	
-	public bool removeMoney(int amountRemoved) // tells whether amount removed can be afforded
+
+    // tells whether amount removed can be afforded. returns true when a unit can be afforded, false when not.
+	public bool removeMoney(int amountRemoved) 
 	{
 		if(amountRemoved<=money)
 		{
